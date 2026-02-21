@@ -1,21 +1,30 @@
 name: APK_YAPICI
-on: [push, workflow_dispatch]
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
-      - name: Java Kurulumu
+
+      - name: Java 17 Kurulumu
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: Buildozer ile Derle
+
+      - name: Buildozer ile APK Yap
         uses: ArtemBernatskyy/buildozer-action@v1
         with:
           workdir: .
           buildozer_version: master
-      - name: APK Dosyasini Hazirla
+
+      - name: APK Dosyasini Yukle
         uses: actions/upload-artifact@v4
         with:
           name: Hazir-Payload-APK
